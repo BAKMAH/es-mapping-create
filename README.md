@@ -39,10 +39,12 @@ cd
 curl https://raw.githubusercontent.com/catonrug/es-mapping-create/master/step-1-create_elastic_mapping.sh > step-1-create_elastic_mapping.sh
 curl https://raw.githubusercontent.com/catonrug/es-mapping-create/master/step-2-create_elastic_template.sh > step-2-create_elastic_template.sh
 curl https://raw.githubusercontent.com/catonrug/es-mapping-create/master/step-3-create_elastic_pipeline.sh > step-3-create_elastic_pipeline.sh
+curl https://raw.githubusercontent.com/catonrug/es-mapping-create/master/step-4-configure-zabbix_server.conf.sh > step-4-configure-zabbix_server.conf.sh
 chmod +x step*
 ./step-1-create_elastic_mapping.sh
 ./step-2-create_elastic_template.sh
 ./step-3-create_elastic_pipeline.sh
+./step-4-configure-zabbix_server.conf.sh
 ```
 
 ## Start Zabbix server
