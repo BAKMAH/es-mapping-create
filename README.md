@@ -1,6 +1,6 @@
 # Create ElasticSearch mapping for zabbix 4.0
 
-This is tested and works Zabbix 4.0 together with ElasticSearch version 6.1.4
+This is tested and works with Zabbix 4.0 together with ElasticSearch 6.1.4
 
 ## Install binaries
 
