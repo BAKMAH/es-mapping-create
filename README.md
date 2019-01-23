@@ -1,24 +1,52 @@
-create elasticsearch mapping for zabbix 4.0  
+# Create ElasticSearch mapping for zabbix 4.0
 
-# 0 install elasticsearch
+This is tested and works with ElasticSearch version 6.1.4
 
-# 1 change scripts ES_URL on step 1-3
+## Install binaries
+
 ```
-ES_URL=http://127.0.0.1:9200
+yum -y install java-1.8.0-openjdk
+curl https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.1.4.rpm -o elasticsearch-6.1.4.rpm
+rpm -ivh elasticsearch-6.1.4.rpm
 ```
 
-# 2 run shell to create es mapping on elasticsearch server
+## Remove previous configuration
+
+If you previously did not properly configure then these steps must be executed:
 ```
-shell# bash step-1-create_elastic_mapping.sh
-shell# bash step-2-create_elastic_template.sh
-shell# bash step-3-create_elastic_pipeline.sh
+# check existing setup
+curl -X GET http://localhost:9200/_cat/indices?v
+
+# stop zabbix server
+systemctl stop zabbix-server
+
+# remove existing mapping
+curl -X DELETE http://localhost:9200/uint
+curl -X DELETE http://localhost:9200/dbl
+curl -X DELETE http://localhost:9200/str
+curl -X DELETE http://localhost:9200/log
+curl -X DELETE http://localhost:9200/text
+
+# check if no mapping is there
+curl -X GET http://localhost:9200/_cat/indices?v
+# it should report 'health status index uuid pri rep docs.count docs.deleted store.size pri.store.size'
 ```
-# 3 modify Zabbix configration on zabbix server,see step 4-5
+
+## Create new mapping
+
 ```
-step-4-zabbix_server.conf
-step-5-zabbix.conf.php
+cd
+curl https://raw.githubusercontent.com/catonrug/es-mapping-create/master/step-1-create_elastic_mapping.sh > mapping.sh
+chmod +x mapping.sh
+./mapping.sh
 ```
-# 4 restart zabbix-server
+
+
+
+## Start Zabbix server
 ```
-systemctl restart zabbix-server
+systemctl start zabbix-server
 ```
+
+
+
