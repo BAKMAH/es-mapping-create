@@ -1,6 +1,6 @@
 # Create ElasticSearch mapping for zabbix 4.0
 
-This is tested and works with ElasticSearch version 6.1.4
+This is tested and works Zabbix 4.0 together with ElasticSearch version 6.1.4
 
 ## Install binaries
 
@@ -12,7 +12,7 @@ rpm -ivh elasticsearch-6.1.4.rpm
 
 ## Remove previous configuration
 
-If you previously did not properly configure then these steps must be executed:
+If you previously did not properly configure then these steps must be executed to remove currupted setup:
 ```
 # check existing setup
 curl -X GET http://localhost:9200/_cat/indices?v
@@ -26,6 +26,14 @@ curl -X DELETE http://localhost:9200/dbl
 curl -X DELETE http://localhost:9200/str
 curl -X DELETE http://localhost:9200/log
 curl -X DELETE http://localhost:9200/text
+
+# check if no mapping is there
+curl -X GET http://localhost:9200/_cat/indices?v
+
+# there may be a case where you need to remove additional dates
+curl -X DELETE http://localhost:9200/text-2019-01-23
+curl -X DELETE http://localhost:9200/uint-2019-01-23
+curl -X DELETE http://localhost:9200/dbl-2019-01-23
 
 # check if no mapping is there
 curl -X GET http://localhost:9200/_cat/indices?v
